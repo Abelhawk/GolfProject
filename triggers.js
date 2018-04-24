@@ -1,14 +1,17 @@
 let allCourses;
 let selCourse;
+let numPlayers = 3;
+let numberOfHoles = 18;
 
 function loadDoc() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             allCourses = JSON.parse(this.responseText);
-            console.log(allCourses);
+            // console.log(allCourses);
+            createCard();
+            createColumns();
 
-            createCard()
         }
     };
     xhttp.open("GET", "//uxcobra.com/golfapi/course11819.txt", true);
@@ -22,26 +25,38 @@ let playersDiv = document.getElementById("left");
 
 
 function initialize() {
-    createColumns();
 }
 
 function createColumns(){
-    for (let i = 0; i < allCourses.data.holeCount; i++){
-        columnDiv.innerHTML += '<div class="column" id="col' + (i+1) + '"><div class="cHeader">' + allCourses.holes[i].hole + '</div></div>';
+    // console.log(allCourses.data);
+    for (let i = 1; i <= allCourses.data.holeCount; i++){
+        columnDiv.innerHTML += '<div class="column" id="col' + (i+1) + '"><div class="cHeader">' + i + '</div></div>';
     }
-    fillCard();
 }
 
 function createCard(){
-    for(let h = 0; h < (allCourses.data.holeCount + 1); h++){
-        $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="text">');
+    for(let p = 1; p < (numPlayers + 1); p++){
+        playersDiv.innerHTML += '<div class="playerLabel' + p + '" contenteditable="true"><span style="cursor:pointer" class="fa fa-trash" onclick="deletePlayer('+ p + ')"> </span>Player ' + (p) + '</div>';
+        for(let h = 1; h <= (allCourses.data.holeCount); h++){ //Should create columns but ain't
+            $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="number" onkeyup="addScore('+ p +')">');
+            // $("#totalCol" + h).append('<div id="player' + h + 'total"></div>');
+
+        }
     }
 }
 
-function fillCard(){
-    for(let p = 0; p < numPlayers; p++){
-        playersDiv.innerHTML += '<div class="playerLabel" contenteditable="true">Player ' + (p+1) + '</div>';
+function addScore(inputId){
+    console.log(inputId + " " + score);
+    let tempscore = 0;
+    for(let i = 1; i <= numberOfHoles; i++){
+        tempscore += Number($("#p" + score + "h" + i).val());
     }
+    $("#totalCol" + inputId).html(tempscore);
 }
 
-
+function deletePlayer(playerNum){
+    $(".playerLabel" + playerNum).remove();
+    for (let i = 0; i <= numberOfHoles; i ++){
+        $("#p" + playerNum + "h" )
+    }
+}

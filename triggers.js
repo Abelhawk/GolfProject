@@ -9,8 +9,8 @@ function loadDoc() {
         if (this.readyState === 4 && this.status === 200) {
             allCourses = JSON.parse(this.responseText);
             // console.log(allCourses);
-            createCard();
             createColumns();
+            createCard();
 
         }
     };
@@ -28,35 +28,33 @@ function initialize() {
 }
 
 function createColumns(){
-    // console.log(allCourses.data);
     for (let i = 1; i <= allCourses.data.holeCount; i++){
-        columnDiv.innerHTML += '<div class="column" id="col' + (i+1) + '"><div class="cHeader">' + i + '</div></div>';
+        columnDiv.innerHTML += '<div class="column" id="col' + i + '"><div class="cHeader">' + i + '</div></div>';
     }
 }
 
 function createCard(){
     for(let p = 1; p < (numPlayers + 1); p++){
         playersDiv.innerHTML += '<div class="playerLabel' + p + '" contenteditable="true"><span style="cursor:pointer" class="fa fa-trash" onclick="deletePlayer('+ p + ')"> </span>Player ' + (p) + '</div>';
-        for(let h = 1; h <= (allCourses.data.holeCount); h++){ //Should create columns but ain't
+        $("#totalColumn").append('<div id="playerTot' + p +'">0</div>');
+        for(let h = 1; h <= (allCourses.data.holeCount); h++){ //Should create columns but isn't
             $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="number" onkeyup="addScore('+ p +')">');
-            // $("#totalCol" + h).append('<div id="player' + h + 'total"></div>');
 
         }
     }
 }
 
 function addScore(inputId){
-    console.log(inputId + " " + score);
     let tempscore = 0;
     for(let i = 1; i <= numberOfHoles; i++){
-        tempscore += Number($("#p" + score + "h" + i).val());
+        tempscore += Number($("#p" + inputId + "h" + i).val());
     }
-    $("#totalCol" + inputId).html(tempscore);
+    $("#playerTot" + inputId).html(tempscore);
 }
 
 function deletePlayer(playerNum){
     $(".playerLabel" + playerNum).remove();
     for (let i = 0; i <= numberOfHoles; i ++){
-        $("#p" + playerNum + "h" )
+        $("#p" + playerNum + "h" ).remove();
     }
 }

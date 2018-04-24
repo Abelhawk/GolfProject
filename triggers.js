@@ -1,5 +1,19 @@
-let numPlayers = 14;
-let course;
+let allCourses;
+let selCourse;
+
+function loadDoc() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            allCourses = JSON.parse(this.responseText);
+            console.log(allCourses);
+
+            createCard()
+        }
+    };
+    xhttp.open("GET", "//uxcobra.com/golfapi/course11819.txt", true);
+    xhttp.send();
+}
 
 loadDoc();
 
@@ -12,14 +26,14 @@ function initialize() {
 }
 
 function createColumns(){
-    for (let i = 0; i < course.holes.length; i++){
-        columnDiv.innerHTML += '<div class="column" id="col' + (i+1) + '"><div class="cHeader">' + course.holes[i].name + '</div></div>';
+    for (let i = 0; i < allCourses.data.holeCount; i++){
+        columnDiv.innerHTML += '<div class="column" id="col' + (i+1) + '"><div class="cHeader">' + allCourses.holes[i].hole + '</div></div>';
     }
     fillCard();
 }
 
 function createCard(){
-    for(let h = 0; h < (course.holes.length + 1); h++){
+    for(let h = 0; h < (allCourses.data.holeCount + 1); h++){
         $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="text">');
     }
 }
@@ -30,21 +44,4 @@ function fillCard(){
     }
 }
 
-function loadDoc() {
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            course = JSON.parse(this.responseText);
-            console.log(course);
-
-            let seltees = course.holes[0].tees;
-            for(let i=0; i < seltees.length; i++){
-                $("#teeSelect").append("<option value='i'>CHAMPION</option>");
-            }
-            // createCard()
-        }
-    };
-    xhttp.open("GET", "holes.txt", true);
-    xhttp.send();
-}
 

@@ -35,10 +35,10 @@ function createColumns(){
 
 function createCard(){
     for(let p = 1; p < (numPlayers + 1); p++){
-        playersDiv.innerHTML += '<div class="playerLabel' + p + '" contenteditable="true"><span style="cursor:pointer" class="fa fa-trash" onclick="deletePlayer('+ p + ')"> </span>Player ' + (p) + '</div>';
-        $("#totalColumn").append('<div id="playerTot' + p +'">0</div>');
+        playersDiv.innerHTML += '<div class="playerLabel' + p + '" contenteditable="true"><span style="cursor:pointer" class="fa fa-trash" onclick="deletePlayer('+ p + ')"></span><span>  </span>Player ' + (p) + '</div>';
+        $("#totalColumn").append('<div class="hole_player'+p+'" id="playerTot' + p +'">0</div>');
         for(let h = 1; h <= (allCourses.data.holeCount); h++){ //Should create columns but isn't
-            $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="number" onkeyup="addScore('+ p +')">');
+            $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="number" class="hole_player'+p+'" onchange="addScore('+ p +')">');
 
         }
     }
@@ -53,8 +53,6 @@ function addScore(inputId){
 }
 
 function deletePlayer(playerNum){
-    $(".playerLabel" + playerNum).remove();
-    for (let i = 0; i <= numberOfHoles; i ++){
-        $("#p" + playerNum + "h" ).remove();
-    }
+    $(".hole_player" + playerNum).remove();
+    $(".playerLabel"+ playerNum).remove();
 }

@@ -6,6 +6,9 @@ let tee = 0;
 let columnDiv = document.getElementById("right");
 let playersDiv = document.getElementById("left");
 let teeSelectDiv = document.getElementById("teeSelect");
+$('.container').hide();
+$('#teeSelect').hide();
+
 
 function loadDoc() {
     console.log("Loading...");
@@ -15,6 +18,9 @@ function loadDoc() {
             allCourses = JSON.parse(this.responseText);
             // console.log(allCourses);
             // addOptions();
+            $('.container').show();
+            $('#teeSelect').show();
+            console.log("Columns loaded successfully.");
             createColumns();
             $(".loading").remove();
 
@@ -27,7 +33,6 @@ function loadDoc() {
 loadDoc();
 
 function createColumns(){
-    console.log("Columns loaded successfully.");
     columnDiv.innerHTML = "";
     for (let i = 1; i <= allCourses.data.holeCount; i++){
         columnDiv.innerHTML += '<div class="column" id="col' + i + '"><div class="cHeader">' + i + '</div><div class="yardage">' + allCourses.data.holes[i-1].teeBoxes[tee].yards + '</div><div class="par">' + allCourses.data.holes[i-1].teeBoxes[tee].par + '</div></div>';
@@ -65,24 +70,24 @@ function deletePlayer(playerNum){
 }
 
 function changeTee(){
-    console.log("The value is " + teeSelectDiv.value);
-    switch(teeSelectDiv.value){
-        case 0:
+    let choice = teeSelectDiv.value;
+    console.log("The value is " + choice);
+    switch(true){
+        case (choice == 0):
             console.log("Pro!");
             tee = 0;
             break;
-        case 1:
+        case (choice == 1):
             console.log("Champion!");
             tee = 1;
             break;
-        case 2:
+        case (choice == 2):
             console.log("Men's!");
             tee = 2;
             break;
-        case 3:
+        case (choice == 3):
             console.log("Women's!");
             tee = 3;
     }
-    console.log(tee);
     createColumns();
 }

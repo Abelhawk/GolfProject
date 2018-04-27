@@ -4,9 +4,12 @@ let numberOfHoles = 18;
 let p = 1;
 let tee = 0;
 let columnDiv = document.getElementById("right");
-let playersDiv = document.getElementById("left");
+let playersDiv = document.getElementById("players");
 let teeSelectDiv = document.getElementById("teeSelect");
+let yardDivs = document.getElementsByClassName("yardage");
+
 $('.container').hide();
+$('.white').hide();
 $('#teeSelect').hide();
 
 
@@ -20,8 +23,11 @@ function loadDoc() {
             // addOptions();
             $('.container').show();
             $('#teeSelect').show();
+            $('.white').show();
             console.log("Columns loaded successfully.");
+            columnDiv.innerHTML = "";
             createColumns();
+
             $(".loading").remove();
 
         }
@@ -37,17 +43,19 @@ function createColumns(){
     for (let i = 1; i <= allCourses.data.holeCount; i++){
         columnDiv.innerHTML += '<div class="column" id="col' + i + '"><div class="cHeader">' + i + '</div><div class="yardage">' + allCourses.data.holes[i-1].teeBoxes[tee].yards + '</div><div class="par">' + allCourses.data.holes[i-1].teeBoxes[tee].par + '</div></div>';
     }
-    if (p <= 1){
+
+    if(p == 1){
         createCard();
     }
+
 }
 
 function createCard(){
         playersDiv.innerHTML += '<div class="label" id="playerLabel' + p + '" contenteditable="true"><span style="cursor:pointer" class="fa fa-trash" onclick="deletePlayer('+ p + ')"></span><span>  </span>Player ' + (p) + '</div>';
         $("#totalColumn").append('<div class="hole hole_player'+ p +'" id="playerTot' + p +'">0</div>');
-        for(let h = 1; h <= (allCourses.data.holeCount); h++){
-            $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="number" class="hole_player'+p+'" onchange="addScore('+ p +')">');
-        }
+        // for(let h = 1; h <= (allCourses.data.holeCount); h++){
+        //     $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="number" class="hole_player'+ p +'" onchange="addScore('+ p +')">');
+        // }
     p++;
 
 }
@@ -71,7 +79,6 @@ function deletePlayer(playerNum){
 
 function changeTee(){
     let choice = teeSelectDiv.value;
-    console.log("The value is " + choice);
     switch(true){
         case (choice == 0):
             console.log("Pro!");

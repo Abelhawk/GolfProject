@@ -10,11 +10,10 @@
     <link rel="stylesheet" href="style.css">
     <script src="triggers.js" defer></script>
 </head>
-<body>
 <img src="https://swingbyswing-b9.s3.amazonaws.com/photo/in-round/10112953/uploaded-photo68921726-480x270.png">
 <br>
 <div class="loading">Loading...</div>
-<select id="teeSelect" onchange="changeTee()">
+<span class="white">Select tee:</span> <select id="teeSelect" onchange="changeTee()">
     <option value="0">Pro</option>
     <option value="1">Champion</option>
     <option value="2">Men's</option>
@@ -29,6 +28,7 @@
         <div class="subtitle">Par</div>
 
         <button class="newPlayer" onclick="createCard()">Add New Player</button><br>
+        <div id="players"></div>
     </div>
     <div id="right">
     </div>

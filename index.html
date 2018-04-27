@@ -10,21 +10,31 @@
     <link rel="stylesheet" href="style.css">
     <script src="triggers.js" defer></script>
 </head>
-<body onload="initialize()">
-<select id="teeSelect">
-
+<body>
+<img src="https://swingbyswing-b9.s3.amazonaws.com/photo/in-round/10112953/uploaded-photo68921726-480x270.png">
+<br>
+<div class="loading">Loading...</div>
+<select id="teeSelect" onchange="changeTee()">
+    <option value="0">Pro</option>
+    <option value="1">Champion</option>
+    <option value="2">Men's</option>
+    <option value="3">Women's</option>
 </select>
 <div class="container">
     <!--Dropdown menu with a value of 0, 1, 2, or 3 to determine which tee-->
 
     <div id="left">
         <div class="pHeader">Players</div>
+        <div class="subtitle">Yardage</div>
+        <div class="subtitle">Par</div>
+
+        <button class="newPlayer" onclick="createCard()">Add New Player</button><br>
     </div>
     <div id="right">
     </div>
     <div id="total">
         <div class="column" id="totalColumn">
-            <div class="cHeader" id="totalCol">Total</div>
+            <div class="total cHeader" id="totalCol">Total</div>
         </div>
     </div>
 </div>

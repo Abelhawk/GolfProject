@@ -1,16 +1,22 @@
 let allCourses;
 let selCourse;
-let numPlayers = 3;
 let numberOfHoles = 18;
+let p = 1;
+let tee = 0;
+let columnDiv = document.getElementById("right");
+let playersDiv = document.getElementById("left");
+let teeSelectDiv = document.getElementById("teeSelect");
 
 function loadDoc() {
+    console.log("Loading...");
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             allCourses = JSON.parse(this.responseText);
             // console.log(allCourses);
+            // addOptions();
             createColumns();
-            createCard();
+            $(".loading").remove();
 
         }
     };
@@ -20,28 +26,25 @@ function loadDoc() {
 
 loadDoc();
 
-let columnDiv = document.getElementById("right");
-let playersDiv = document.getElementById("left");
-
-
-function initialize() {
-}
-
 function createColumns(){
+    console.log("Columns loaded successfully.");
+    columnDiv.innerHTML = "";
     for (let i = 1; i <= allCourses.data.holeCount; i++){
-        columnDiv.innerHTML += '<div class="column" id="col' + i + '"><div class="cHeader">' + i + '</div></div>';
+        columnDiv.innerHTML += '<div class="column" id="col' + i + '"><div class="cHeader">' + i + '</div><div class="yardage">' + allCourses.data.holes[i-1].teeBoxes[tee].yards + '</div><div class="par">' + allCourses.data.holes[i-1].teeBoxes[tee].par + '</div></div>';
+    }
+    if (p <= 1){
+        createCard();
     }
 }
 
 function createCard(){
-    for(let p = 1; p < (numPlayers + 1); p++){
-        playersDiv.innerHTML += '<div class="playerLabel' + p + '" contenteditable="true"><span style="cursor:pointer" class="fa fa-trash" onclick="deletePlayer('+ p + ')"></span><span>  </span>Player ' + (p) + '</div>';
-        $("#totalColumn").append('<div class="hole_player'+p+'" id="playerTot' + p +'">0</div>');
-        for(let h = 1; h <= (allCourses.data.holeCount); h++){ //Should create columns but isn't
+        playersDiv.innerHTML += '<div class="label" id="playerLabel' + p + '" contenteditable="true"><span style="cursor:pointer" class="fa fa-trash" onclick="deletePlayer('+ p + ')"></span><span>  </span>Player ' + (p) + '</div>';
+        $("#totalColumn").append('<div class="hole hole_player'+ p +'" id="playerTot' + p +'">0</div>');
+        for(let h = 1; h <= (allCourses.data.holeCount); h++){
             $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="number" class="hole_player'+p+'" onchange="addScore('+ p +')">');
-
         }
-    }
+    p++;
+
 }
 
 function addScore(inputId){
@@ -53,6 +56,33 @@ function addScore(inputId){
 }
 
 function deletePlayer(playerNum){
+    console.log(p);
+    $("#playerTot" + playerNum).remove();
     $(".hole_player" + playerNum).remove();
-    $(".playerLabel"+ playerNum).remove();
+    $("#playerLabel"+ playerNum).remove();
+    p--;
+
+}
+
+function changeTee(){
+    console.log("The value is " + teeSelectDiv.value);
+    switch(teeSelectDiv.value){
+        case 0:
+            console.log("Pro!");
+            tee = 0;
+            break;
+        case 1:
+            console.log("Champion!");
+            tee = 1;
+            break;
+        case 2:
+            console.log("Men's!");
+            tee = 2;
+            break;
+        case 3:
+            console.log("Women's!");
+            tee = 3;
+    }
+    console.log(tee);
+    createColumns();
 }

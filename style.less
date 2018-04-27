@@ -7,6 +7,11 @@ body{
   margin: 0;
   padding: 0;
   background: linear-gradient(315deg, rgb(42, 124, 25) 0%, rgb(47, 191, 41) 100%);
+  font-family: sans-serif;
+}
+
+img{
+  margin-top: 20px;
 }
 
 .container{
@@ -14,7 +19,8 @@ body{
   justify-content: center;
   height: 100%;
   width: 100%;
-  margin-top: 100px;
+  margin-top: 60px;
+  //visibility: hidden;
 }
 
 #left,#right,#total{
@@ -41,14 +47,17 @@ body{
 }
 
 .cHeader{
-  padding: 10px 10px 15px 10px;
+  padding: 10px 10px 6px 10px;
   font-weight: bold;
   font-size: 12pt;
+}
 
+.total{
+  margin-bottom: 66px;
 }
 
 .pHeader{
-  padding: 15px;
+  padding: 20px 5px 5px 5px;
   font-weight: bold;
   font-size: 12pt;
 }
@@ -56,13 +65,50 @@ body{
 input{
   width: 30px;
   text-align: center;
+  margin-bottom: 3px;
 }
 
-.playerLabel{
+.label{
   text-align: right;
+  margin-bottom: 2px;
 }
 
-//#totalCol{
-//  padding: 5px;
-//  background-color: blue;
-//}
+button{
+  cursor: pointer;
+}
+
+.yardage{
+  font-style: italic;
+  color: gray;
+  font-weight: lighter;
+  font-size: 9pt;
+  padding: 3px 0 3px 0;
+}
+
+.par{
+  padding-bottom: 30px;
+  color: darkgreen;
+}
+
+.newPlayer{
+  background-color: darkgreen;
+  color: white;
+  margin-bottom: 11px;
+}
+
+.hole{
+  margin-bottom: 4px;
+}
+
+.subtitle{
+  font-style: italic;
+  text-align: right;
+  font-size: 10pt;
+  padding: 2pt;
+}
+
+.loading{
+  font-style: italic;
+  color: white;
+  font-size: 16pt;
+}

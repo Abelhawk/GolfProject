@@ -41,21 +41,21 @@ loadDoc();
 function createColumns(){
     columnDiv.innerHTML = "";
     for (let i = 1; i <= allCourses.data.holeCount; i++){
-        columnDiv.innerHTML += '<div class="column" id="col' + i + '"><div class="cHeader">' + i + '</div><div class="yardage">' + allCourses.data.holes[i-1].teeBoxes[tee].yards + '</div><div class="par">' + allCourses.data.holes[i-1].teeBoxes[tee].par + '</div></div>';
+        columnDiv.innerHTML += '<div class="column" id="col' + i + '"><div class="cHeader">' + i + '</div><div class="yardage" id="yard'+ i +'">' + allCourses.data.holes[i-1].teeBoxes[tee].yards + '</div><div class="par">' + allCourses.data.holes[i-1].teeBoxes[tee].par + '</div></div>';
     }
 
-    if(p == 1){
-        createCard();
+    for(let i = 0; i < p; i++){
+        deletePlayer(p);
     }
-
+    createCard();
 }
 
 function createCard(){
         playersDiv.innerHTML += '<div class="label" id="playerLabel' + p + '" contenteditable="true"><span style="cursor:pointer" class="fa fa-trash" onclick="deletePlayer('+ p + ')"></span><span>  </span>Player ' + (p) + '</div>';
         $("#totalColumn").append('<div class="hole hole_player'+ p +'" id="playerTot' + p +'">0</div>');
-        // for(let h = 1; h <= (allCourses.data.holeCount); h++){
-        //     $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="number" class="hole_player'+ p +'" onchange="addScore('+ p +')">');
-        // }
+        for(let h = 1; h <= (allCourses.data.holeCount); h++){
+            $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="number" class="hole_player'+ p +'" onchange="addScore('+ p +')">');
+        }
     p++;
 
 }
@@ -73,8 +73,9 @@ function deletePlayer(playerNum){
     $("#playerTot" + playerNum).remove();
     $(".hole_player" + playerNum).remove();
     $("#playerLabel"+ playerNum).remove();
-    p--;
-
+    if (p > 1){
+        p--;
+    }
 }
 
 function changeTee(){
@@ -96,5 +97,10 @@ function changeTee(){
             console.log("Women's!");
             tee = 3;
     }
-    createColumns();
+    for (let i = 1; i <= allCourses.data.holeCount; i++){ //This STUPID THING
+        let yardz = document.getElementById("yard" + i);
+        let result = allCourses.data.holes[i-1].teeBoxes[tee].yards;
+        console.log(result);
+        yardz.innerText = result;
+    }
 }

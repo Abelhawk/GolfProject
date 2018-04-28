@@ -26,6 +26,7 @@ img {
 }
 #left {
   padding: 5px;
+  min-width: 100px;
 }
 #right {
   display: flex;

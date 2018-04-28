@@ -1,12 +1,10 @@
 let allCourses;
-let selCourse;
 let numberOfHoles = 18;
 let p = 1;
 let tee = 0;
 let columnDiv = document.getElementById("right");
 let playersDiv = document.getElementById("players");
 let teeSelectDiv = document.getElementById("teeSelect");
-let yardDivs = document.getElementsByClassName("yardage");
 
 $('.container').hide();
 $('.white').hide();
@@ -19,8 +17,6 @@ function loadDoc() {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             allCourses = JSON.parse(this.responseText);
-            // console.log(allCourses);
-            // addOptions();
             $('.container').show();
             $('#teeSelect').show();
             $('.white').show();
@@ -57,7 +53,9 @@ function createCard(){
             $("#col" + h).append('<input id="p' + p + 'h' + h + '" type="number" class="hole_player'+ p +'" onchange="addScore('+ p +')">');
         }
     p++;
-
+    if (p == 5){
+        $('#newPlaya').hide();
+    }
 }
 
 function addScore(inputId){
@@ -75,6 +73,9 @@ function deletePlayer(playerNum){
     $("#playerLabel"+ playerNum).remove();
     if (p > 1){
         p--;
+    }
+    if (p >= 4){
+        $('#newPlaya').show();
     }
 }
 
